@@ -16,6 +16,8 @@ term.activate
 term.do_script "cd #{ENV['TM_PROJECT_DIRECTORY']} &amp;&amp; script/server; exit"</string>
 	<key>input</key>
 	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@p</string>
 	<key>name</key>
 	<string>App server in terminal window</string>
 	<key>output</key>
