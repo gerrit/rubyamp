@@ -5,15 +5,20 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 d = RubyAMP::RemoteDebugger.new
 exit unless d.connected?
 
 what = RubyAMP::Inspect.get_selection
-RubyAMP::Inspect.copy_to_clipboard(d.evaluate(what, :current, :string))
-puts "Copied value of #{what} to clipboard"</string>
+pbcopy(d.evaluate(what, :current, :string))
+puts "Copied value of #{what} to clipboard"
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>document</string>
 	<key>keyEquivalent</key>
@@ -22,6 +27,8 @@ puts "Copied value of #{what} to clipboard"</string>
 	<string>Debug - Copy inspection to clipboard as string</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>C6EC1187-A816-4B38-9975-F2E84C67B7C6</string>
 </dict>

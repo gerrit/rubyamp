@@ -3,16 +3,27 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>nop</string>
+	<string>saveActiveFile</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 require "#{ENV['TM_BUNDLE_SUPPORT']}/lib/rspec_debugger.rb"
 
-debug_rspec(:focussed)</string>
+if ENV['TM_SCOPE'].include?("story")
+  puts "Running a single story is not supported."
+else
+  debug_rspec(:focussed)
+end
+
+
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>line</string>
 	<key>input</key>
-	<string>selection</string>
+	<string>none</string>
 	<key>keyEquivalent</key>
 	<string>@D</string>
 	<key>name</key>
@@ -20,7 +31,7 @@ debug_rspec(:focussed)</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
-	<string>source.ruby.rspec</string>
+	<string>source.ruby.rspec, source.ruby.rspec.story</string>
 	<key>uuid</key>
 	<string>CE765558-55E5-492F-A779-D005C2D01DAA</string>
 </dict>

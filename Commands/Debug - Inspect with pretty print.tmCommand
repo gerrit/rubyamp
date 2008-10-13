@@ -5,7 +5,8 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
+	<string>#!/usr/bin/env sh
+cat &lt;&lt;'RUBYEOF' &gt; /tmp/ruby-amp-$$.rb
 
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/ruby_amp.rb"
 d = RubyAMP::RemoteDebugger.new
@@ -14,7 +15,11 @@ exit unless d.connected?
 what = RubyAMP::Inspect.get_selection
 
 puts "#{what} = \n#{d.evaluate(what, :current, :pp)}"
-</string>
+
+
+RUBYEOF
+
+${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>fallbackInput</key>
 	<string>word</string>
 	<key>input</key>
@@ -25,6 +30,8 @@ puts "#{what} = \n#{d.evaluate(what, :current, :pp)}"
 	<string>Debug - Inspect with pretty print</string>
 	<key>output</key>
 	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.ruby, text.html.ruby</string>
 	<key>uuid</key>
 	<string>1236EAB2-B06B-4969-ABEC-6121A0873A14</string>
 </dict>
