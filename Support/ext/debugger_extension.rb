@@ -44,7 +44,7 @@ EOF
     end
     
     def wait_for_connection
-      while Debugger.handler.interface.nil?; sleep 0.10; end
+      sleep 0.10 while Debugger.handler.interface.nil?
     end
   end
   
