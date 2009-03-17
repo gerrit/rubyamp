@@ -40,6 +40,9 @@ def debug_rspec(focussed_or_file = :file)
     ENV['TM_BUNDLE_SUPPORT'] = RubyAMP::Config[:rspec_bundle_path] + "/Support"
     require '#{RubyAMP::Config[:rspec_bundle_path]}/Support/lib/spec/mate'
     Debugger.wait_for_connection
+    # HACK: options like --drb and --timout stop the remote debugger from working
+    # so we take the somewhat brutal approach of nuking all options
+    ENV['TM_RSPEC_OPTS'] = nil if ENV['TM_RSPEC_OPTS']
     Spec::Mate::Runner.new.run_#{focussed_or_file} STDOUT
   RUBY
 end
