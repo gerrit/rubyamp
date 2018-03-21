@@ -22,6 +22,8 @@ RUBYEOF
 ${TM_RUBY:-ruby} /tmp/ruby-amp-$$.rb; exit_status=$?; rm /tmp/ruby-amp-$$.rb; exit $exit_status</string>
 	<key>input</key>
 	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@p</string>
 	<key>name</key>
 	<string>App server in terminal window</string>
 	<key>output</key>
